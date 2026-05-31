@@ -14,10 +14,10 @@ export default defineConfig({
   nitro: {
     preset: 'cloudflare-pages'
   },
-  preview: {
-    allowedHosts: true
-  },
   vite: {
+    preview: {
+      allowedHosts: true
+    },
     plugins: [
       VitePWA({
         registerType: 'autoUpdate',
