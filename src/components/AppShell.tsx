@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Home,
@@ -17,9 +17,16 @@ import {
   Settings,
   Bell,
   ShieldAlert,
-  MessageCircle
+  MessageCircle,
+  Languages
 } from "lucide-react";
 import { SaarthiChat } from "./SaarthiChat";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const getNavLinks = (role: string | null | undefined) => {
   const common = [
@@ -181,13 +188,84 @@ export function TopBar({ title, onOpenChat }: { title?: string, onOpenChat?: () 
   );
 }
 
+const INDIC_LANGUAGES = [
+  { code: 'en', name: 'English', symbol: 'EN' },
+  { code: 'hi', name: 'हिंदी (Hindi)', symbol: 'हिं' },
+  { code: 'mr', name: 'मराठी (Marathi)', symbol: 'म' },
+  { code: 'gu', name: 'ગુજરાતી (Gujarati)', symbol: 'ગુ' },
+  { code: 'ta', name: 'தமிழ் (Tamil)', symbol: 'த' },
+  { code: 'te', name: 'తెలుగు (Telugu)', symbol: 'తె' },
+  { code: 'bn', name: 'বাংলা (Bengali)', symbol: 'বা' },
+  { code: 'kn', name: 'ಕನ್ನಡ (Kannada)', symbol: 'ಕ' },
+  { code: 'ml', name: 'മലയാളം (Malayalam)', symbol: 'മ' },
+  { code: 'pa', name: 'ਪੰਜਾਬੀ (Punjabi)', symbol: 'ਪੰ' }
+];
+
 export function LangPill() {
+  const loc = useLocation();
+  const [currentLang, setCurrentLang] = useState(() => {
+    const saved = localStorage.getItem('vidyasetu_lang');
+    if (saved) {
+      const found = INDIC_LANGUAGES.find(l => l.code === saved);
+      if (found) return found;
+    }
+    return INDIC_LANGUAGES[0];
+  });
+
+  const triggerTranslate = (code: string) => {
+    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
+    if (select) {
+      select.value = code;
+      select.dispatchEvent(new Event('change'));
+    }
+  };
+
+  const changeLanguage = (lang: typeof INDIC_LANGUAGES[0]) => {
+    setCurrentLang(lang);
+    localStorage.setItem('vidyasetu_lang', lang.code);
+    if (lang.code === 'en') {
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/;`;
+      window.location.reload();
+      return;
+    }
+    triggerTranslate(lang.code);
+  };
+
+  useEffect(() => {
+    if (currentLang.code !== 'en') {
+      const timer = setTimeout(() => {
+        triggerTranslate(currentLang.code);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [loc.pathname, currentLang.code]);
+
   return (
-    <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm font-medium hover:bg-accent transition">
-      <Globe size={14} />
-      <span className="hidden sm:inline">हिं</span>
-      <span className="hidden md:inline opacity-60">/ EN</span>
-    </button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary text-secondary-foreground text-sm font-medium hover:bg-accent transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <Globe size={14} />
+          <span className="hidden sm:inline">{currentLang.symbol}</span>
+          <span className="hidden md:inline opacity-60">/ {currentLang.code.toUpperCase()}</span>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-48 z-50">
+        {INDIC_LANGUAGES.map((lang) => (
+          <DropdownMenuItem
+            key={lang.code}
+            onClick={() => changeLanguage(lang)}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <span className="font-semibold text-saffron">{lang.symbol}</span>
+            <span className="flex-1">{lang.name}</span>
+            {currentLang.code === lang.code && (
+              <div className="w-2 h-2 rounded-full bg-emerald"></div>
+            )}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

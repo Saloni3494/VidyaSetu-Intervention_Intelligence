@@ -117,6 +117,30 @@
     color: var(--color-foreground);
     -webkit-font-smoothing: antialiased;
   }
+  body {
+    top: 0 !important;
+  }
+  
+  /* Hide Google Translate Banner and elements */
+  #google_translate_element,
+  .goog-te-banner-frame,
+  .skiptranslate > iframe,
+  .goog-logo-link,
+  .goog-te-gadget,
+  .goog-tooltip,
+  .goog-tooltip:hover,
+  .VIpgJd-Zvi9od-ORHb-OEVmcd,
+  .VIpgJd-Zvi9od-aZ2wEe-wOHMyf,
+  .VIpgJd-Zvi9od-aZ2wEe-wOHMyf-ti6hGc {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Remove hover highlight on translated text */
+  .goog-text-highlight {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
 }
 
 @layer utilities {
