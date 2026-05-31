@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { getDb } from './database.js';
+
 import Groq from 'groq-sdk';
 
 dotenv.config();
@@ -15,22 +15,32 @@ app.use(express.json());
 // Initialize Groq AI
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || 'dummy_key' });
 
+const mockStudents = [
+  { id: "anita-001", name: "Rohan Patil", grade: "5B", concern: "Missed 3 days · Reading slowed", tone: "urgent", ring: 52, avatar: "रो", attendance: "78%", math: "65%", language: "50%", behavior: "Quiet" },
+  { id: "s2", name: "Pooja Kale", grade: "5B", concern: "Math fluency dipping", tone: "watch", ring: 68, avatar: "पू", attendance: "92%", math: "58%", language: "85%", behavior: "Active" },
+  { id: "s3", name: "Imran Shaikh", grade: "5B", concern: "Hasn't spoken much this week", tone: "watch", ring: 72, avatar: "इ", attendance: "88%", math: "70%", language: "68%", behavior: "Withdrawn" },
+  { id: "s4", name: "Sneha Joshi", grade: "5B", concern: "Improving steadily ✨", tone: "good", ring: 88, avatar: "स्ने", attendance: "98%", math: "90%", language: "88%", behavior: "Engaged" },
+];
+
+const mockInterventions = [
+  { student_id: "anita-001", problem: "Reading fluency dropped from 45 → 28 wpm", action: "Paired reading with Sneha · 15 min daily", follow_up: "Reassess on 18 Sep", outcome: "", status: "Improving", step: 5, tone: "good" },
+  { student_id: "s2", problem: "Math fluency dipping", action: "5-min daily number game · home practice card", follow_up: "Reassess Friday", outcome: "", status: "Just started", step: 1, tone: "watch" },
+  { student_id: "s3", problem: "Quiet and withdrawn this week", action: "Counselor short check-in · seating change", follow_up: "Tomorrow", outcome: "", status: "Resolved", step: 6, tone: "good" },
+];
+
 // Get all students
-app.get('/api/students', async (req, res) => {
+app.get('/api/students', (req, res) => {
   try {
-    const db = await getDb();
-    const students = await db.all('SELECT * FROM students');
-    res.json(students);
+    res.json(mockStudents);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
 // Get single student by ID
-app.get('/api/students/:id', async (req, res) => {
+app.get('/api/students/:id', (req, res) => {
   try {
-    const db = await getDb();
-    const student = await db.get('SELECT * FROM students WHERE id = ?', [req.params.id]);
+    const student = mockStudents.find(s => s.id === req.params.id);
     if (!student) return res.status(404).json({ error: "Not found" });
     res.json(student);
   } catch (error) {
@@ -39,16 +49,12 @@ app.get('/api/students/:id', async (req, res) => {
 });
 
 // Get interventions for a student
-app.get('/api/interventions', async (req, res) => {
+app.get('/api/interventions', (req, res) => {
   try {
-    const db = await getDb();
-    let query = 'SELECT * FROM interventions';
-    let params = [];
+    let interventions = mockInterventions;
     if (req.query.student_id) {
-       query += ' WHERE student_id = ?';
-       params.push(req.query.student_id);
+       interventions = interventions.filter(i => i.student_id === req.query.student_id);
     }
-    const interventions = await db.all(query, params);
     res.json(interventions);
   } catch (error) {
     res.status(500).json({ error: error.message });
