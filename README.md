@@ -8,8 +8,8 @@
   </p>
 
   <p>
-    <a href="https://vidyasetu-intervention-intelligence.onrender.com"><strong>Live Frontend</strong></a> ·
-    <a href="https://vidyasetu-backend.onrender.com"><strong>Live Backend</strong></a>
+    <a href="https://vidyasetu02.onrender.com/"><strong>Live Frontend</strong></a> ·
+    <a href="https://vidyasetu-intervention-intelligence.onrender.com"><strong>Live Backend</strong></a>
   </p>
 </div>
 
