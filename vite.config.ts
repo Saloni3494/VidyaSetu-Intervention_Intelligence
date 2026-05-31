@@ -14,6 +14,9 @@ export default defineConfig({
   nitro: {
     preset: 'cloudflare-pages'
   },
+  preview: {
+    allowedHosts: true
+  },
   vite: {
     plugins: [
       VitePWA({
