@@ -27,6 +27,11 @@ Teachers in India are overwhelmed by large class sizes, making it hard to track 
 *   **Early Warning System:** Automatically flags students based on attendance dips and learning gaps.
 *   **Multilingual Voice Assistant (Saarthi):** Allows teachers to ask for help in their native language (e.g., *"Rohan ke liye kya karein?"*).
 *   **Smart Nudges:** Suggests highly personalized, low-effort daily interventions (e.g., 5-min reading games).
+*   **Peer-Learning Matchmaker:** AI dynamically pairs strong students with struggling students for collaborative micro-learning.
+*   **Automated Parent Outreach:** Drafts and queues WhatsApp/SMS messages to parents for attendance drops or praise.
+*   **Daily Mood Check-ins:** Simple, gamified mood trackers for students to alert teachers of emotional distress before class begins.
+*   **Micro-Learning Bites:** Delivers 2-minute pedagogical tips to teachers based on the specific challenges their class is facing that week.
+*   **Inclusive Education Tracking:** Dedicated flags and support suggestions for students with learning disabilities or special needs.
 *   **Offline-First (PWA):** Works seamlessly in remote schools without internet, syncing data when online.
 *   **Wellbeing Health Rings:** Replaces cold statistics with empathetic visual indicators (Good, Watch, Urgent).
 *   **Automated Task Management:** AI automatically schedules follow-ups and drafts parent outreach letters.
