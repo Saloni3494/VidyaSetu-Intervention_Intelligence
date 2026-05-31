@@ -65,3 +65,41 @@ Powered by **Llama 3.1 8B** (via Groq), the AI acts as an autonomous analytical 
 *   **AI Integration:** Groq SDK (Meta's Llama-3.1-8b-instant).
 *   **Deployment:** Render (Automated CI/CD).
 *   **Architecture:** Progressive Web App (PWA), Offline-First.
+
+---
+
+### 📂 Directory Structure
+```text
+VidyaSetu-Intervention_Intelligence/
+├── server/                 # Backend Node.js / Express API
+│   ├── index.js            # Main Express server and Groq AI routes
+│   └── database.js         # SQLite database configuration
+├── src/                    # Frontend React SPA
+│   ├── components/         # Reusable UI components (shadcn/ui, AppShell)
+│   ├── contexts/           # Global state (Auth, Role management)
+│   ├── lib/                # API clients and utility functions
+│   ├── routes/             # TanStack file-based routing pages
+│   │   ├── __root.tsx      # Main application layout and providers
+│   │   ├── index.tsx       # Landing/Role selection page
+│   │   ├── teacher.tsx     # Teacher dashboard
+│   │   ├── principal.tsx   # Principal dashboard
+│   │   └── district.tsx    # District officer dashboard
+│   ├── main.tsx            # Vite application entry point
+│   └── styles.css          # Tailwind CSS definitions
+├── public/                 # Static assets (icons, manifest)
+├── index.html              # Frontend HTML shell
+├── package.json            # Dependencies and npm scripts
+└── vite.config.ts          # Vite configuration and PWA setup
+```
+
+---
+
+### 🔗 Hosted Live Links
+
+*   **🌐 Live Application (Frontend):** [https://vidyasetu02.onrender.com/](https://vidyasetu02.onrender.com/)
+*   **⚙️ Live API (Backend):** [https://vidyasetu-intervention-intelligence.onrender.com](https://vidyasetu-intervention-intelligence.onrender.com)
+*   **🐙 GitHub Repository:** [https://github.com/Saloni3494/VidyaSetu-Intervention_Intelligence](https://github.com/Saloni3494/VidyaSetu-Intervention_Intelligence)
+
+<div align="center">
+  <i>Built with ❤️ for Indian Schools by Team Spectra</i>
+</div>
