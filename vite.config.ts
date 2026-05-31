@@ -12,7 +12,7 @@ export default defineConfig({
     server: { entry: "server" },
   },
   nitro: {
-    preset: 'cloudflare-pages'
+    preset: 'node-server'
   },
   vite: {
     preview: {
